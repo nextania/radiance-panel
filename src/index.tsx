@@ -3,12 +3,12 @@ import { render } from "solid-js/web";
 import "./index.css";
 import App from "./App.tsx";
 import { Navigate, Route, Router } from "@solidjs/router";
-import Hosts from "./components/pages/Hosts.tsx";
-import NotFound from "./components/pages/NotFound.tsx";
-import Login from "./components/pages/Login.tsx";
-import Tls from "./components/pages/Tls.tsx";
-import Outposts from "./components/pages/Outposts.tsx";
-import Settings from "./components/pages/Settings.tsx";
+import Hosts from "./pages/Hosts.tsx";
+import NotFound from "./pages/NotFound.tsx";
+import Login from "./pages/Login.tsx";
+import Tls from "./pages/Tls.tsx";
+import Outposts from "./pages/Outposts.tsx";
+import Settings from "./pages/Settings.tsx";
 
 const root = document.getElementById("root");
 

@@ -5,6 +5,7 @@ import { useTranslate } from "../i18n";
 import Select from "../components/Select";
 import { createMemo } from "solid-js";
 import { useGlobalState } from "../context";
+import { Button } from "../components/Button";
 
 const LoginBg = styled.div`
     background: linear-gradient(to top, #7c2d12, #581c87, #111827);
@@ -96,23 +97,6 @@ const Subheading = styled.div`
     font-weight: 300;
 `;
 
-const Button = styled.button`
-    background-color: oklch(.558 .288 302.321);
-    color: white;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 0.5rem;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-    &:hover {
-        background-color: oklch(.496 .265 301.924);
-    }
-    margin-top: 2rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-`;
-
 const HeadingLarge = styled.div`
     padding: 2rem;
     font-size: 2.5rem;
@@ -135,6 +119,13 @@ const LoginMain = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 1rem;
+`;
+
+const TextGroup = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `;
 
 const LoginSpacer = styled.div`
@@ -176,10 +167,12 @@ const Login = () => {
                 <LoginForm>
                     <LoginSpacer />
                     <LoginMain>
-                        <img src={logo} alt="Radiance logo" height="80" style={{ "margin-bottom": '1rem' }} />
-                        <Heading>{t("login.login")}</Heading>
-                        <Subheading>{t("login.welcomeBack")}</Subheading>
-                        <Button onClick={login}><img src={authentik} alt="Authentik logo" /> {t("login.loginWith", { provider: "Authentik" })}</Button>
+                        <img src={logo} alt="Radiance logo" height="80" />
+                        <TextGroup>
+                            <Heading>{t("login.login")}</Heading>
+                            <Subheading>{t("login.welcomeBack")}</Subheading>
+                        </TextGroup>
+                        <Button Icon={() => <img src={authentik} alt="Authentik logo" />} text={() => t("login.loginWith", { provider: "Authentik" })!} onClick={login} />
                     </LoginMain>
                     <LoginSpacer>
                         <Select options={[{

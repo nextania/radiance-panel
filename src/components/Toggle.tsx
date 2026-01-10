@@ -10,8 +10,21 @@ const ToggleBase = styled.label`
     margin-bottom: 0.5rem;
     margin-right: 0.2rem;
     border: 1px solid transparent;
+    
+    input[type="checkbox"] {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    
     &:focus-within {
-        outline: default;
+        outline: none;
+    }
+    
+    &:focus-within:not(:has(input:disabled)) {
+        box-shadow: 0 0 0 2px var(--focus-ring);
+        border-radius: 5px;
     }
 `;
 
@@ -25,9 +38,16 @@ const Slider = styled.span`
     border-radius: 5px;
     transition: 0.2s;
     
-    ${(props: { checked: boolean }) => props.checked ? `
+    ${(props: { checked: boolean; disabled?: boolean }) => props.checked ? `
         background-color: var(--primary-color);
     ` : ""}
+    
+    ${(props: { checked: boolean; disabled?: boolean }) => props.disabled ? `
+        opacity: 0.5;
+        cursor: not-allowed;
+        background-color: var(--disabled-bg);
+    ` : ""}
+    
     &:before {
         position: absolute;
         content: "";
@@ -38,7 +58,7 @@ const Slider = styled.span`
         background-color: white;
         border-radius: 5px;
         transition: 0.2s;
-        ${(props: { checked: boolean }) => props.checked ? `
+        ${(props: { checked: boolean; disabled?: boolean }) => props.checked ? `
             transform: translateX(16px);
         ` : ""}
     }
@@ -58,7 +78,7 @@ const Toggle = ({ checked, setChecked, onChange, disabled }: ToggleProps) => {
                 (setChecked as Setter<boolean>)(e.currentTarget.checked);
                 (onChange as Function | undefined)?.(e);
             }} disabled={disabled} />
-            <Slider checked={checked()??false} />
+            <Slider checked={checked()??false} disabled={disabled} />
         </ToggleBase>
     )
 };

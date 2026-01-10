@@ -10,52 +10,51 @@ const SelectContainer = styled.div`
 const SelectButton = styled.button`
   width: 100%;
   padding: 0.5rem 1rem;
-  background: var(--bg-overlay);
-  color: white;
+  background: var(--bg-card);
+  color: var(--text-primary);
   border: 1px solid var(--border-color);
   border-radius: 0.5rem;
   font-size: 1rem;
-  cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
   transition: all 0.2s ease;
   
   &:hover {
-    border-color: var(--primary-color);
-    background: var(--bg-overlay-dark);
+    border-color: var(--border-color-light);
+    background: var(--bg-navbar-item-hover);
   }
   
-  &:focus {
-    outline: 2px solid var(--primary-color);
-    outline-offset: 2px;
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--focus-ring);
+    border-color: var(--border-focus);
   }
 `;
 
 const Arrow = styled.span<{ isOpen: boolean }>`
   transition: transform 0.2s ease;
-  transform: ${props => props.isOpen ? 'rotate(180deg)' : 'rotate(0deg)'};
+  transform: ${props => props.isOpen ? "rotate(180deg)" : "rotate(0deg)"};
   display: inline-block;
 `;
 
 const DropdownMenu = styled.div<{ isOpen: boolean; openUpward: boolean }>`
   position: absolute;
-  ${props => props.openUpward ? 'bottom: calc(100% + 0.25rem);' : 'top: calc(100% + 0.25rem);'}
+  ${props => props.openUpward ? "bottom: calc(100% + 0.25rem);" : "top: calc(100% + 0.25rem);"}
   left: 0;
   right: 0;
-  background: var(--bg-overlay-darker);
-  border: 1px solid var(--border-color);
+  background: var(--bg-navbar-item-hover);
+  border: 1px solid var(--border-color-light);
   border-radius: 0.5rem;
   box-shadow: var(--shadow-lg);
   z-index: 1000;
   max-height: 300px;
   overflow-y: auto;
-  opacity: ${props => props.isOpen ? '1' : '0'};
-  visibility: ${props => props.isOpen ? 'visible' : 'hidden'};
-  transform: ${props => props.isOpen ? 'translateY(0)' : props.openUpward ? 'translateY(10px)' : 'translateY(-10px)'};
+  opacity: ${props => props.isOpen ? "1" : "0"};
+  visibility: ${props => props.isOpen ? "visible" : "hidden"};
+  transform: ${props => props.isOpen ? "translateY(0)" : props.openUpward ? "translateY(10px)" : "translateY(-10px)"};
   transition: all 0.2s ease;
   
-  /* Custom scrollbar */
   &::-webkit-scrollbar {
     width: 8px;
   }
@@ -77,13 +76,14 @@ const DropdownMenu = styled.div<{ isOpen: boolean; openUpward: boolean }>`
 
 const Option = styled.div<{ isSelected: boolean }>`
   padding: 0.75rem 1rem;
-  cursor: pointer;
-  color: white;
-  background: ${props => props.isSelected ? 'var(--primary-color)' : 'transparent'};
-  transition: background-color 0.15s ease;
+  user-select: none;
+  color: ${props => props.isSelected ? "white" : "var(--text-primary)"};
+  background: ${props => props.isSelected ? "var(--primary-color)" : "transparent"};
+  transition: background-color 0.15s ease, color 0.15s ease;
   
   &:hover {
-    background: ${props => props.isSelected ? 'var(--primary-hover)' : 'var(--bg-hover-light)'};
+    background: ${props => props.isSelected ? "var(--primary-hover)" : "var(--bg-hover)"};
+    color: ${props => props.isSelected ? "white" : "var(--text-secondary)"};
   }
   
   &:first-child {
@@ -112,7 +112,7 @@ interface SelectProps<T extends string> {
 const Select = <T extends string>(props: SelectProps<T>) => {
   const [isOpen, setIsOpen] = createSignal(false);
   const [openUpward, setOpenUpward] = createSignal(false);
-  const currentValue = () => typeof props.value === 'function' ? props.value() : props.value;
+  const currentValue = () => typeof props.value === "function" ? props.value() : props.value;
   const selectedOption = () => props.options.find(opt => opt.value === currentValue());
   const handleSelect = (value: T) => {
     props.onChange(value);
@@ -151,16 +151,16 @@ const Select = <T extends string>(props: SelectProps<T>) => {
       const dropdownHeight = dropdownRect.height;
       
       setOpenUpward(spaceBelow < dropdownHeight && spaceAbove > spaceBelow);
-      document.addEventListener('click', (e) => handleClickOutside(e, containerRef));
+      document.addEventListener("click", (e) => handleClickOutside(e, containerRef));
     } else {
-      document.removeEventListener('click',  (e) => handleClickOutside(e, containerRef));
+      document.removeEventListener("click",  (e) => handleClickOutside(e, containerRef));
     }
   });
   
   return (
     <SelectContainer data-select-container ref={containerRef}>
       <SelectButton onClick={handleToggle} type="button">
-        <span>{selectedOption()?.label || props.placeholder || 'Select...'}</span>
+        <span>{selectedOption()?.label || props.placeholder || "Select..."}</span>
         <Arrow isOpen={isOpen()}>▼</Arrow>
       </SelectButton>
       <DropdownMenu isOpen={isOpen()} openUpward={openUpward()} ref={dropdownRef}>

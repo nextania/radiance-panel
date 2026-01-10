@@ -5,10 +5,16 @@ import { useTranslate } from "../i18n";
 const HostContainer = styled.div`
     display: flex;
     padding: 0.5rem;
-    border: 1px solid var(--border-color-alt);
+    border: 1px solid var(--border-color-light);
     border-radius: 8px;
-    background: var(--bg-overlay);
+    background: var(--bg-card);
     box-shadow: var(--shadow-md);
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    
+    &:hover {
+        border-color: var(--border-color-light);
+        box-shadow: var(--shadow-lg);
+    }
 `;
 
 const HostDetails = styled.div`
@@ -27,10 +33,9 @@ const HostIcon = styled.div`
     justify-content: center;
 `;
 const HostName = styled.div`
-
     font-size: 1rem;
     font-weight: 500;
-    color: white;
+    color: var(--text-primary);
 `;
 const HostBadge = styled.div<{ type: "enabled" | "disabled" | "tls" }>`
     padding: 0.25rem 0.5rem;
@@ -43,9 +48,9 @@ const HostBadge = styled.div<{ type: "enabled" | "disabled" | "tls" }>`
         "var(--info-dark)"};
     
     border: 1px solid ${(props) =>
-        props.type === "enabled" ? "var(--success-color)" :
-        props.type === "disabled" ? "var(--error-color)" :
-        "var(--info-color)"};
+        props.type === "enabled" ? "var(--success-border)" :
+        props.type === "disabled" ? "var(--error-border)" :
+        "var(--info-border)"};
     color: ${(props) =>
         props.type === "enabled" ? "var(--success-color)" :
         props.type === "disabled" ? "var(--error-color)" :
@@ -66,11 +71,19 @@ const ActionButton = styled.button`
     justify-content: center;
     padding: 0.25rem;
     border-radius: 4px;
-    color: var(--text-tertiary);
-    transition: background-color 0.2s ease;
+    color: var(--text-primary);
+    transition: background-color 0.2s ease, color 0.2s ease;
+    
     &:hover {
-        background-color: var(--bg-hover-dark);
+        background-color: var(--bg-hover);
+        color: var(--text-secondary);
     }
+    
+    &:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px var(--focus-ring);
+    }
+    
     font-size: 1.25rem;
 `;
 

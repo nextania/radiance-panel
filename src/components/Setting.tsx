@@ -8,8 +8,13 @@ const SettingContainer = styled.div`
     padding: 0.75rem;
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    background: var(--bg-overlay);
+    background: var(--bg-card);
     box-shadow: var(--shadow-md);
+    transition: box-shadow 0.2s ease;
+    
+    &:hover {
+        box-shadow: var(--shadow-lg);
+    }
 `;
 
 type SelectSettingProps<T extends string> = {
@@ -53,7 +58,7 @@ const SettingAction = styled.div`
 const SettingLabel = styled.div`
     font-size: 1rem;
     font-weight: 500;
-    color: white;
+    color: var(--text-primary);
 `;
 
 const SettingDescription = styled.div`

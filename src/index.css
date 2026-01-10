@@ -48,42 +48,47 @@ html, body, #root {
 
   --primary-color: oklch(.558 .288 302.321);
   --primary-hover: oklch(.496 .265 301.924);
-  --primary-light: #f6e6ff;
+  --primary-text: oklch(.78 .24 302);
   
-  --text-color: #999;
-  --text-secondary: #aaa;
-  --text-tertiary: #ccc;
+  --text-primary: oklch(.85 .02 302);
+  --text-secondary: oklch(.65 .02 302);
+  --text-disabled: oklch(.45 .02 302);
   
-  --border-color: #333;
-  --border-color-alt: #555;
-  --border-light: #e0e0e0;
+  --border-color: oklch(.3 .03 302);
+  --border-color-light: oklch(.4 .03 302);
+  /* TODO: */
+  --border-focus: oklch(.558 .288 302.321);
   
-  --bg-overlay: rgba(0, 0, 0, 0.5);
-  --bg-overlay-dark: rgba(0, 0, 0, 0.7);
-  --bg-overlay-darker: rgba(0, 0, 0, 0.95);
-  --bg-overlay-light: rgba(0, 0, 0, 0.3);
-  --bg-navbar: #00000077;
-  --bg-navbar-dark: #111111;
-  --bg-hover: #f0f0f0;
-  --bg-hover-dark: #00000077;
-  --bg-hover-light: rgba(255, 255, 255, 0.1);
+  --bg-overlay: oklch(.1 .05 302 / .5);
+  --bg-navbar: oklch(.08 .08 302 / .85);
+  --bg-navbar-dark: oklch(.1 .08 302);
+  --bg-navbar-item: oklch(.2 .11 296);
+  --bg-navbar-item-hover: oklch(.18 .08 302);
+  --bg-card: oklch(.19 .09 314);
+  --bg-hover: oklch(.95 .02 302 / .1);
   
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 4px 6px rgba(0, 0, 0, 0.3);
-  --shadow-drawer: 2px 0 8px rgba(0, 0, 0, 0.15);
+  --shadow-sm: 0 2px 4px oklch(.05 .05 302 / .15);
+  --shadow-md: 0 4px 6px oklch(.05 .05 302 / .2);
+  --shadow-lg: 0 4px 12px oklch(.05 .05 302 / .35);
+  --shadow-drawer: 2px 0 8px oklch(.05 .05 302 / .25);
   
-  --scrollbar-track: rgba(0, 0, 0, 0.3);
-  --scrollbar-thumb: #555;
-  --scrollbar-thumb-hover: #666;
-  --toggle-inactive: #777;
+  --scrollbar-track: oklch(.1 .05 302 / .3);
+  --scrollbar-thumb: oklch(.4 .05 302);
+  --scrollbar-thumb-hover: oklch(.5 .05 302);
   
-  --success-color: #2ebd6c;
-  --success-dark: #072a1a;
-  --error-color: #ff5263;
-  --error-dark: #4d0e14;
-  --info-color: #57a2fe;
-  --info-dark: #0a234e;
+  --toggle-inactive: oklch(.5 .02 302);
+  --focus-ring: oklch(.558 .288 302.321 / .5);
+  --disabled-bg: oklch(.2 .05 302);
+  
+  --success-color: oklch(.65 .18 165);
+  --success-dark: oklch(.2 .08 165);
+  --success-border: oklch(.5 .15 165 / .4);
+  --error-color: oklch(.6 .22 15);
+  --error-dark: oklch(.25 .08 15);
+  --error-border: oklch(.5 .18 15 / .4);
+  --info-color: oklch(.65 .18 250);
+  --info-dark: oklch(.22 .08 250);
+  --info-border: oklch(.5 .15 250 / .4);
 }
 
 h1 {

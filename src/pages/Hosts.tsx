@@ -18,12 +18,12 @@ const Section = styled.div`
 const HeadingLarge = styled.div`
   font-size: 1.5rem;
   font-weight: 600;
-  color: white;
+  color: var(--text-primary);
 `;
 const SubheadingLarge = styled.div`
   font-size: 1rem;
   font-weight: 400;
-  color: white;
+  color: var(--text-secondary);
 `;
 const Content = styled.div`
   display: flex;

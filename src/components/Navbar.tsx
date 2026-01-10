@@ -22,7 +22,6 @@ const NavbarBase = styled.nav`
 
 const LogoBase = styled.img`
     height: 40px;
-    cursor: pointer;
     transition: opacity 0.2s ease;
     
     &:hover {
@@ -45,15 +44,16 @@ const NavbarItem = styled.div<{ isActive?: boolean }>`
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem 1rem;
-    cursor: pointer;
+    user-select: none;
     border-radius: 6px;
     transition: background-color 0.2s ease, color 0.2s ease;
-    color: ${(props) => props.isActive ? "var(--primary-color)" : "var(--text-color)"};
-    background-color: ${(props) => props.isActive ? "var(--primary-light)" : "transparent"};
+    color: ${(props) => props.isActive ? "var(--primary-text)" : "var(--text-primary)"};
+    background-color: ${(props) => props.isActive ? "var(--bg-navbar-item)" : "transparent"};
     font-weight: ${(props) => props.isActive ? "600" : "400"};
     
     &:hover {
-        background-color: var(--bg-hover);
+        background-color: ${(props) => props.isActive ? "var(--bg-navbar-item-hover)" : "var(--bg-hover)"};
+        color: ${(props) => props.isActive ? "var(--primary-text)" : "var(--text-secondary)"};
     }
 `;
 
@@ -68,16 +68,22 @@ const RightActions = styled.div`
 const ActionButton = styled.button`
     background: none;
     border: none;
-    cursor: pointer;
+    user-select: none;
     display: flex;
     align-items: center;
     padding: 0.5rem;
     border-radius: 6px;
-    transition: background-color 0.2s ease;
-    color: var(--text-color);
+    transition: background-color 0.2s ease, color 0.2s ease;
+    color: var(--text-primary);
     
     &:hover {
         background-color: var(--bg-hover);
+        color: var(--text-secondary);
+    }
+    
+    &:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px var(--focus-ring);
     }
 `;
 
@@ -131,12 +137,11 @@ const DrawerHeader = styled.div`
     align-items: center;
     justify-content: space-between;
     padding: 0 1rem 1rem 1rem;
-    border-bottom: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border-color-light);
 `;
 
 const DrawerLogoStyle = styled.img`
     height: 32px;
-    cursor: pointer;
     transition: opacity 0.2s ease;
     
     &:hover {
@@ -159,12 +164,13 @@ const DrawerElementStyle = styled.div<{ isActive?: boolean }>`
     cursor: pointer;
     border-radius: 6px;
     transition: background-color 0.2s ease, color 0.2s ease;
-    color: ${(props) => props.isActive ? "var(--primary-color)" : "var(--text-color)"};
-    background-color: ${(props) => props.isActive ? "var(--primary-light)" : "transparent"};
+    color: ${(props) => props.isActive ? "var(--primary-text)" : "var(--text-primary)"};
+    background-color: ${(props) => props.isActive ? "var(--bg-card)" : "transparent"};
     font-weight: ${(props) => props.isActive ? "600" : "400"};
     
     &:hover {
-        background-color: var(--bg-hover);
+        background-color: ${(props) => props.isActive ? "var(--bg-navbar-item-hover)" : "var(--bg-hover)"};
+        color: ${(props) => props.isActive ? "var(--primary-text)" : "var(--text-secondary)"};
     }
 `;
 

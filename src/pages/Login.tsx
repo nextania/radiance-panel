@@ -2,6 +2,7 @@ import logo from "../assets/radiance.svg";
 import authentik from "../assets/authentik.svg";
 import { styled } from "solid-styled-components";
 import { useTranslate } from "../i18n";
+import Select from "../components/Select";
 import { createMemo } from "solid-js";
 import { useGlobalState } from "../context";
 
@@ -129,8 +130,32 @@ const SubheadingLarge = styled.div`
     color: #ddd;
 `;
 
+const LoginMain = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+`;
+
+const LoginSpacer = styled.div`
+    padding: 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+`;
+
+const LoginFooter = styled.div`
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    color: #666;
+`;
+
 
 const Login = () => {
+    const state = createMemo(() => useGlobalState());
+    const t = useTranslate();
     const login = () => {
         window.location.href = "/api/oidc/authentik";
     };
@@ -149,11 +174,30 @@ const Login = () => {
                     <path fill="black" fill-opacity="0.3" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,197.3C672,192,768,160,864,154.7C960,149,1056,171,1152,186.7C1248,203,1344,213,1392,218.7L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
                 </Wave>
                 <LoginForm>
-                    <img src={logo} alt="Radiance logo" height="80" style={{ "margin-bottom": '1rem' }} />
-                    <Heading>Login</Heading>
-                    <Subheading>Welcome back! Please login to continue.</Subheading>
-                    <Button onClick={login}><img src={authentik} alt="Authentik logo" /> Login with Authentik</Button>
-                </LoginForm>
+                    <LoginSpacer />
+                    <LoginMain>
+                        <img src={logo} alt="Radiance logo" height="80" style={{ "margin-bottom": '1rem' }} />
+                        <Heading>{t("login.login")}</Heading>
+                        <Subheading>{t("login.welcomeBack")}</Subheading>
+                        <Button onClick={login}><img src={authentik} alt="Authentik logo" /> {t("login.loginWith", { provider: "Authentik" })}</Button>
+                    </LoginMain>
+                    <LoginSpacer>
+                        <Select options={[{
+                            value: "en",
+                            label: `${t("languages.en")!} (English)`,
+                        }, {
+                            value: "zh-CN",
+                            label: `${t("languages.zh-CN")!} (简体中文)`,
+                        }]} value={state().get("sessionData")?.language || "en"} onChange={(val) => {
+                            state().update("sessionData", { language: val });
+                            localStorage.setItem("language", val);
+                        }}  />
+                        
+                        <LoginFooter>
+                            {t("brand.copyright", { year: new Date().getFullYear() })}
+                        </LoginFooter>
+                    </LoginSpacer>
+                </LoginForm>    
                 <LoginAside>
                     <HeadingLarge>{t("brand.welcome")}</HeadingLarge>
                     <SubheadingLarge>{t("brand.tagline")}</SubheadingLarge>

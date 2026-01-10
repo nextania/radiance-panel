@@ -12,12 +12,12 @@ const NavbarBase = styled.nav`
     justify-content: space-between;
     width: 100%;
     padding: 1rem;
-    background-color: var(--navbar-bg, #00000077);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: var(--bg-navbar);
+    box-shadow: var(--shadow-sm);
     gap: 1rem;
     box-sizing: border-box;
     border-radius: 12px;
-    border: 1px solid var(--border-color, #333);
+    border: 1px solid var(--border-color);
 `;
 
 const LogoBase = styled.img`
@@ -48,12 +48,12 @@ const NavbarItem = styled.div<{ isActive?: boolean }>`
     cursor: pointer;
     border-radius: 6px;
     transition: background-color 0.2s ease, color 0.2s ease;
-    color: ${(props) => props.isActive ? "var(--primary-color, #7000cc)" : "var(--text-color, #999)"};
-    background-color: ${(props) => props.isActive ? "var(--primary-light, #f6e6ff)" : "transparent"};
+    color: ${(props) => props.isActive ? "var(--primary-color)" : "var(--text-color)"};
+    background-color: ${(props) => props.isActive ? "var(--primary-light)" : "transparent"};
     font-weight: ${(props) => props.isActive ? "600" : "400"};
     
     &:hover {
-        background-color: var(--hover-bg, #f0f0f0);
+        background-color: var(--bg-hover);
     }
 `;
 
@@ -74,10 +74,10 @@ const ActionButton = styled.button`
     padding: 0.5rem;
     border-radius: 6px;
     transition: background-color 0.2s ease;
-    color: var(--text-color, #999);
+    color: var(--text-color);
     
     &:hover {
-        background-color: var(--hover-bg, #f0f0f0);
+        background-color: var(--bg-hover);
     }
 `;
 
@@ -95,7 +95,7 @@ const DrawerOverlay = styled.div<{ isOpen: boolean }>`
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--bg-overlay);
     display: none;
     z-index: 99;
     opacity: ${(props) => props.isOpen ? "1" : "0"};
@@ -113,8 +113,8 @@ const DrawerMenu = styled.div<{ isOpen: boolean }>`
     left: 0;
     bottom: 0;
     width: 250px;
-    background-color: var(--navbar-bg, #111111);
-    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+    background-color: var(--bg-navbar-dark);
+    box-shadow: var(--shadow-drawer);
     z-index: 100;
     transform: translateX(${(props) => props.isOpen ? "0" : "-100%"});
     transition: transform 0.3s ease;
@@ -131,7 +131,7 @@ const DrawerHeader = styled.div`
     align-items: center;
     justify-content: space-between;
     padding: 0 1rem 1rem 1rem;
-    border-bottom: 1px solid var(--border-color, #e0e0e0);
+    border-bottom: 1px solid var(--border-light);
 `;
 
 const DrawerLogoStyle = styled.img`
@@ -159,12 +159,12 @@ const DrawerElementStyle = styled.div<{ isActive?: boolean }>`
     cursor: pointer;
     border-radius: 6px;
     transition: background-color 0.2s ease, color 0.2s ease;
-    color: ${(props) => props.isActive ? "var(--primary-color, #7000cc)" : "var(--text-color, #999)"};
-    background-color: ${(props) => props.isActive ? "var(--primary-light, #f6e6ff)" : "transparent"};
+    color: ${(props) => props.isActive ? "var(--primary-color)" : "var(--text-color)"};
+    background-color: ${(props) => props.isActive ? "var(--primary-light)" : "transparent"};
     font-weight: ${(props) => props.isActive ? "600" : "400"};
     
     &:hover {
-        background-color: var(--hover-bg, #f0f0f0);
+        background-color: var(--bg-hover);
     }
 `;
 

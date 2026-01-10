@@ -74,13 +74,13 @@ const Setting = <T extends SettingProps<U>, U extends string = string>(props: T)
                 {props.type === "select" ? (
                     <select
                         value={props.value}
-                        onChange={(e) => props.onChange(e.currentTarget.value as U)}
+                        onChange={(e) => props.onChange?.(e.currentTarget.value as U)}
                     />
                 ) : props.type === "toggle" ? (
                     <Toggle
                         checked={() => props.value}
                         setChecked={() => {}}
-                        onChange={(e) => props.onChange(e.currentTarget.checked)}
+                        onChange={(e) => props.onChange?.(e.currentTarget.checked)}
                     />
                 ) : props.type === "button" ? (
                     <Button onClick={props.onClick} text={props.buttonLabel} Icon={props.Icon}></Button>

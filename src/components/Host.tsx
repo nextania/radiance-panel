@@ -5,7 +5,7 @@ import { useTranslate } from "../i18n";
 const HostContainer = styled.div`
     display: flex;
     padding: 0.5rem;
-    border: 1px solid var(--border-color, #777);
+    border: 1px solid var(--border-color, #555);
     border-radius: 8px;
     background: rgba(0,0,0,0.5);
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);

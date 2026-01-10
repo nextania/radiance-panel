@@ -38,7 +38,10 @@ html, body, #root {
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background: linear-gradient(108deg, #2D005A 0.03%, #4E1D00 99.97%);
+  /* background: linear-gradient(108deg, #2D005A 0.03%, #4E1D00 99.97%); */
+  /* background: linear-gradient(108deg, #140029 0.03%, #1b0a00 99.97%); */
+  /* background-color: #121212; */
+  background-color: #14001f;  
 
   width: 100%;
   min-height: 100vh;

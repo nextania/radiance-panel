@@ -17,6 +17,7 @@ const NavbarBase = styled.nav`
     gap: 1rem;
     box-sizing: border-box;
     border-radius: 12px;
+    border: 1px solid var(--border-color, #333);
 `;
 
 const LogoBase = styled.img`

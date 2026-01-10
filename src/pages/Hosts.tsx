@@ -52,7 +52,7 @@ const Hosts = () => {
             <SubheadingLarge>{t("hosts.manage")}</SubheadingLarge>
           </Section>
           <Section>
-            <Button Icon={<FiPlus />} text={t("hosts.addHost")!} />
+            <Button Icon={FiPlus} text={() => t("hosts.addHost")!} />
           </Section>
         </Header>
         <Content>

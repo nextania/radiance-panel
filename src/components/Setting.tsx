@@ -18,7 +18,7 @@ type SelectSettingProps<T extends string> = {
     description?: string,
     options: { value: T, label: string }[],
     value: T,
-    onChange: (value: T) => void,
+    onChange?: (value: T) => void,
 };
 
 type ToggleSettingProps = {
@@ -26,7 +26,7 @@ type ToggleSettingProps = {
     label: string,
     description?: string,
     value: boolean,
-    onChange: (value: boolean) => void,
+    onChange?: (value: boolean) => void,
 };
 
 type ButtonSettingProps = {
@@ -35,7 +35,7 @@ type ButtonSettingProps = {
     description?: string,
     buttonLabel: string,
     Icon?: Component,
-    onClick: () => void,
+    onClick?: () => void,
 };
 
 const SettingDetails = styled.div`

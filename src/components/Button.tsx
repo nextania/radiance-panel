@@ -1,8 +1,8 @@
-import type { JSX } from "solid-js";
+import { type Component } from "solid-js";
 import { styled } from "solid-styled-components";
 
 const ButtonBase = styled.button`
-  background-color: oklch(.558 .288 302.321);
+  background-color: var(--primary-color);
   color: white;
   padding: 0.5rem 1rem;
   border: none;
@@ -10,18 +10,18 @@ const ButtonBase = styled.button`
   font-size: 1rem;
   transition: background-color 0.3s ease;
   &:hover {
-    background-color: oklch(.496 .265 301.924);
+    background-color: var(--primary-hover);
   }
   display: flex;
   align-items: center;
   gap: 0.5rem;
 `;
 
-export const Button = ({ Icon, text, onClick }: { Icon: JSX.Element, text: string; onClick?: () => void }) => {
+export const Button = ({ Icon, text, onClick }: { Icon?: Component, text?: string | (() => string); onClick?: () => void }) => {
   return (
     <ButtonBase onClick={onClick}>
-      {Icon}
-      {text}
+      {Icon && <Icon />}
+      {typeof text === "function" ? text() : text}
     </ButtonBase>
   )
 };

@@ -1,0 +1,29 @@
+{
+    "brand": {
+        "welcome": "Welcome to Radiance",
+        "tagline": "An open-source multipurpose gateway",
+        "copyright": "© {{ year }} Nextania Technologies and contributors."
+    },
+    "login": {
+        "login": "Log in",
+        "loginWith": "Log in with {{ provider }}",
+        "welcomeBack": "Welcome back! Please log in to continue."
+    },
+    "languages": {
+        "en": "English",
+        "zh-CN": "Chinese (Simplified)"
+    },
+    "navigation": {
+        "hosts": "Hosts",
+        "tls": "TLS certificates",
+        "outposts": "Outposts",
+        "settings": "Settings",
+        "logout": "Log out"
+    },
+    "hosts": {
+        "manage": "Manage your proxy hosts",
+        "addHost": "Add new host",
+        "enabled": "Enabled",
+        "disabled": "Disabled"
+    }
+}

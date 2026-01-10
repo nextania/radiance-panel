@@ -9,7 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@solid-primitives/i18n": "^2.2.1",
     "@solidjs/router": "^0.15.4",
+    "corvu": "^0.7.2",
     "solid-icons": "^1.1.0",
     "solid-js": "^1.9.10",
     "solid-styled-components": "^0.28.5"

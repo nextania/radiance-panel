@@ -17,9 +17,9 @@ const ButtonBase = styled.button`
   gap: 0.5rem;
 `;
 
-export const Button = ({ Icon, text }: { Icon: JSX.Element, text: string; }) => {
+export const Button = ({ Icon, text, onClick }: { Icon: JSX.Element, text: string; onClick?: () => void }) => {
   return (
-    <ButtonBase>
+    <ButtonBase onClick={onClick}>
       {Icon}
       {text}
     </ButtonBase>

@@ -1,6 +1,9 @@
-import logo from "../../assets/radiance.svg";
-import authentik from "../../assets/authentik.svg";
+import logo from "../assets/radiance.svg";
+import authentik from "../assets/authentik.svg";
 import { styled } from "solid-styled-components";
+import { useTranslate } from "../i18n";
+import { createMemo } from "solid-js";
+import { useGlobalState } from "../context";
 
 const LoginBg = styled.div`
     background: linear-gradient(to top, #7c2d12, #581c87, #111827);
@@ -38,7 +41,7 @@ const Star = styled.div`
     animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 `;
 
-const LoginLeft = styled.div`
+const LoginAside = styled.div`
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -151,10 +154,10 @@ const Login = () => {
                     <Subheading>Welcome back! Please login to continue.</Subheading>
                     <Button onClick={login}><img src={authentik} alt="Authentik logo" /> Login with Authentik</Button>
                 </LoginForm>
-                <LoginLeft>
-                    <HeadingLarge>Welcome to Radiance</HeadingLarge>
-                    <SubheadingLarge>An open-source multipurpose gateway</SubheadingLarge>
-                </LoginLeft>
+                <LoginAside>
+                    <HeadingLarge>{t("brand.welcome")}</HeadingLarge>
+                    <SubheadingLarge>{t("brand.tagline")}</SubheadingLarge>
+                </LoginAside>
             </LoginBg>
         </>
     )

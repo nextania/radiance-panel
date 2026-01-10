@@ -3,6 +3,7 @@ import { Button } from "../components/Button.tsx";
 import Host from "../components/Host.tsx";
 import { styled } from "solid-styled-components";
 import { FiPlus } from "solid-icons/fi";
+import { useTranslate } from "../i18n";
 
 const Header = styled.div`
   display: flex;
@@ -41,17 +42,17 @@ const HostsContainer = styled.div`
 `;
 
 const Hosts = () => {
-
+  const t = useTranslate();
   return (
     <>
       <HostsContainer>
         <Header>
           <Section>
-            <HeadingLarge>Hosts</HeadingLarge>
-            <SubheadingLarge>Manage your proxy hosts</SubheadingLarge>
+            <HeadingLarge>{t("navigation.hosts")}</HeadingLarge>
+            <SubheadingLarge>{t("hosts.manage")}</SubheadingLarge>
           </Section>
           <Section>
-            <Button Icon={<FiPlus />} text="Add new host" />
+            <Button Icon={<FiPlus />} text={t("hosts.addHost")!} />
           </Section>
         </Header>
         <Content>

@@ -1,5 +1,6 @@
 import { FiActivity, FiGlobe, FiMonitor, FiMoreVertical, FiShield } from "solid-icons/fi";
 import { styled } from "solid-styled-components";
+import { useTranslate } from "../i18n";
 
 const HostContainer = styled.div`
     display: flex;
@@ -80,12 +81,13 @@ interface HostProps {
 }
 
 const Host = (props: HostProps) => {
+    const t = useTranslate();
     return (
         <HostContainer>
             <HostDetails>
                 <HostIcon> <FiGlobe /> </HostIcon>
                 <HostName>{props.hostname}</HostName>
-                <HostBadge type={props.enabled ? "enabled" : "disabled"}> <FiActivity /> {props.enabled ? "Enabled" : "Disabled"}</HostBadge>
+                <HostBadge type={props.enabled ? "enabled" : "disabled"}> <FiActivity /> {props.enabled ? t("hosts.enabled") : t("hosts.disabled")}</HostBadge>
                 {props.tls && <HostBadge type="tls"> <FiShield /> TLS</HostBadge>}
             </HostDetails>
             <HostActions>

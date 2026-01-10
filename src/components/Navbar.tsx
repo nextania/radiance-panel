@@ -1,9 +1,10 @@
 import type { IconTypes } from "solid-icons";
-import { FiGlobe, FiLock, FiLogOut, FiMoon, FiSettings, FiMenu, FiX, FiServer } from "solid-icons/fi";
+import { FiGlobe, FiLock, FiLogOut, FiSettings, FiMenu, FiX, FiServer } from "solid-icons/fi";
 import { styled } from "solid-styled-components"
-import Logo from "../../assets/radiance.svg";
+import Logo from "../assets/radiance.svg";
 import { useNavigate, useLocation } from "@solidjs/router";
-import { createSignal } from "solid-js";
+import { createSignal, For } from "solid-js";
+import { useTranslate } from "../i18n";
 
 const NavbarBase = styled.nav`
     display: flex;
@@ -179,28 +180,6 @@ const LogoContainer = styled.div`
     flex: 1;
 `;
 
-const navbarElements: NavbarProps[] = [
-    {
-        name: "Hosts",
-        url: "/dashboard/hosts",
-        Icon: FiGlobe,
-    },
-    {
-        name: "TLS certificates",
-        url: "/dashboard/tls",
-        Icon: FiLock,
-    },
-    {
-        name: "Outposts",
-        url: "/dashboard/outposts",
-        Icon: FiServer,
-    },
-    {
-        name: "Settings",
-        url: "/dashboard/settings",
-        Icon: FiSettings,
-    }, 
-];
 
 interface NavbarProps {
     name: string;
@@ -212,6 +191,29 @@ export const Navbar = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [isDrawerOpen, setIsDrawerOpen] = createSignal(false);
+    const t = useTranslate();
+    const navbarElements = (): NavbarProps[] => [
+        {
+            name: t("navigation.hosts")!,
+            url: "/dashboard/hosts",
+            Icon: FiGlobe,
+        },
+        {
+            name: t("navigation.tls")!,
+            url: "/dashboard/tls",
+            Icon: FiLock,
+        },
+        {
+            name: t("navigation.outposts")!,
+            url: "/dashboard/outposts",
+            Icon: FiServer,
+        },
+        {
+            name: t("navigation.settings")!,
+            url: "/dashboard/settings",
+            Icon: FiSettings,
+        }, 
+    ];
 
     const handleNavigation = (url: string) => {
         navigate(url);
@@ -220,13 +222,6 @@ export const Navbar = () => {
 
     const isActive = (url: string) => {
         return location.pathname === url;
-    };
-
-    const toggleTheme = () => {
-        const html = document.documentElement;
-        const isDark = html.getAttribute("data-theme") === "dark";
-        html.setAttribute("data-theme", isDark ? "light" : "dark");
-        localStorage.setItem("theme", isDark ? "light" : "dark");
     };
 
     const handleLogout = () => {
@@ -246,7 +241,8 @@ export const Navbar = () => {
                     />
                 </LogoContainer>
                 <NavElementsDesktop>
-                    {navbarElements.map(({ name, url, Icon }) => (
+                    <For each={navbarElements()}>
+                    {({ name, url, Icon }) => (
                         <NavbarItem 
                             onClick={() => handleNavigation(url)}
                             isActive={isActive(url)}
@@ -254,12 +250,10 @@ export const Navbar = () => {
                             <Icon size={20} />
                             <span>{name}</span>
                         </NavbarItem>
-                    ))}
+                    )}
+                    </For>
                 </NavElementsDesktop>
                 <RightActions>
-                    <ActionButton onClick={toggleTheme} title="Toggle theme">
-                        <FiMoon size={20} />
-                    </ActionButton>
                     <ActionButton onClick={handleLogout} title="Logout">
                         <FiLogOut size={20} />
                     </ActionButton>
@@ -294,7 +288,8 @@ export const Navbar = () => {
                     </ActionButton>
                 </DrawerHeader>
                 <DrawerNav>
-                    {navbarElements.map(({ name, url, Icon }) => (
+                    <For each={navbarElements()}>
+                        {({ name, url, Icon }) => (
                         <DrawerElementStyle 
                             onClick={() => handleNavigation(url)}
                             isActive={isActive(url)}
@@ -302,7 +297,8 @@ export const Navbar = () => {
                             <Icon size={20} />
                             <span>{name}</span>
                         </DrawerElementStyle>
-                    ))}
+                    )}
+                    </For>
                 </DrawerNav>
             </DrawerMenu>
         </NavbarContainer>

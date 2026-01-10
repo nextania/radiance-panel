@@ -1,5 +1,5 @@
 import { createSignal } from 'solid-js'
-import { Button } from "../components/Button/Button.tsx";
+import { Button } from "../components/Button.tsx";
 import Host from "../components/Host.tsx";
 import { styled } from "solid-styled-components";
 import { FiPlus } from "solid-icons/fi";

@@ -1,25 +1,24 @@
 import type { IconTypes } from "solid-icons";
-import { FiGlobe, FiLock, FiLogOut, FiMoon, FiSettings, FiMenu, FiX } from "solid-icons/fi";
+import { FiGlobe, FiLock, FiLogOut, FiMoon, FiSettings, FiMenu, FiX, FiServer } from "solid-icons/fi";
 import { styled } from "solid-styled-components"
 import Logo from "../../assets/radiance.svg";
 import { useNavigate, useLocation } from "@solidjs/router";
 import { createSignal } from "solid-js";
 
-const Navbarstyle = styled.nav`
+const NavbarBase = styled.nav`
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
     padding: 1rem;
-    background-color: var(--navbar-bg, #ffffff);
+    background-color: var(--navbar-bg, #00000077);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     gap: 1rem;
     box-sizing: border-box;
     border-radius: 12px;
-    margin: 0.75rem 0;
 `;
 
-const LogoStyle = styled.img`
+const LogoBase = styled.img`
     height: 40px;
     cursor: pointer;
     transition: opacity 0.2s ease;
@@ -32,14 +31,14 @@ const LogoStyle = styled.img`
 const NavElementsDesktop = styled.div`
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 0.5rem;
     
-    @media (max-width: 768px) {
+    @media (max-width: 825px) {
         display: none;
     }
 `;
 
-const NavElementStyle = styled.div<{ isActive?: boolean }>`
+const NavbarItem = styled.div<{ isActive?: boolean }>`
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -47,8 +46,8 @@ const NavElementStyle = styled.div<{ isActive?: boolean }>`
     cursor: pointer;
     border-radius: 6px;
     transition: background-color 0.2s ease, color 0.2s ease;
-    color: ${(props) => props.isActive ? "var(--primary-color, #0066cc)" : "var(--text-color, #333)"};
-    background-color: ${(props) => props.isActive ? "var(--primary-light, #e6f0ff)" : "transparent"};
+    color: ${(props) => props.isActive ? "var(--primary-color, #7000cc)" : "var(--text-color, #999)"};
+    background-color: ${(props) => props.isActive ? "var(--primary-light, #f6e6ff)" : "transparent"};
     font-weight: ${(props) => props.isActive ? "600" : "400"};
     
     &:hover {
@@ -59,7 +58,9 @@ const NavElementStyle = styled.div<{ isActive?: boolean }>`
 const RightActions = styled.div`
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 0.5rem;
+    flex: 1;
+    justify-content: flex-end;
 `;
 
 const ActionButton = styled.button`
@@ -71,7 +72,7 @@ const ActionButton = styled.button`
     padding: 0.5rem;
     border-radius: 6px;
     transition: background-color 0.2s ease;
-    color: var(--text-color, #333);
+    color: var(--text-color, #999);
     
     &:hover {
         background-color: var(--hover-bg, #f0f0f0);
@@ -81,7 +82,7 @@ const ActionButton = styled.button`
 const MobileMenuButton = styled(ActionButton)`
     display: none;
     
-    @media (max-width: 768px) {
+    @media (max-width: 825px) {
         display: flex;
     }
 `;
@@ -99,7 +100,7 @@ const DrawerOverlay = styled.div<{ isOpen: boolean }>`
     pointer-events: ${(props) => props.isOpen ? "auto" : "none"};
     transition: opacity 0.3s ease;
     
-    @media (max-width: 768px) {
+    @media (max-width: 825px) {
         display: block;
     }
 `;
@@ -110,7 +111,7 @@ const DrawerMenu = styled.div<{ isOpen: boolean }>`
     left: 0;
     bottom: 0;
     width: 250px;
-    background-color: var(--navbar-bg, #ffffff);
+    background-color: var(--navbar-bg, #111111);
     box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
     z-index: 100;
     transform: translateX(${(props) => props.isOpen ? "0" : "-100%"});
@@ -118,7 +119,7 @@ const DrawerMenu = styled.div<{ isOpen: boolean }>`
     overflow-y: auto;
     padding-top: 1rem;
     
-    @media (min-width: 769px) {
+    @media (min-width: 826px) {
         display: none;
     }
 `;
@@ -156,8 +157,8 @@ const DrawerElementStyle = styled.div<{ isActive?: boolean }>`
     cursor: pointer;
     border-radius: 6px;
     transition: background-color 0.2s ease, color 0.2s ease;
-    color: ${(props) => props.isActive ? "var(--primary-color, #0066cc)" : "var(--text-color, #333)"};
-    background-color: ${(props) => props.isActive ? "var(--primary-light, #e6f0ff)" : "transparent"};
+    color: ${(props) => props.isActive ? "var(--primary-color, #7000cc)" : "var(--text-color, #999)"};
+    background-color: ${(props) => props.isActive ? "var(--primary-light, #f6e6ff)" : "transparent"};
     font-weight: ${(props) => props.isActive ? "600" : "400"};
     
     &:hover {
@@ -165,23 +166,41 @@ const DrawerElementStyle = styled.div<{ isActive?: boolean }>`
     }
 `;
 
+const NavbarContainer = styled.div`
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.5rem 1rem;
+    
+`;
+const LogoContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex: 1;
+`;
+
 const navbarElements: NavbarProps[] = [
     {
         name: "Hosts",
-        url: "/hosts",
+        url: "/dashboard/hosts",
         Icon: FiGlobe,
     },
     {
-        name: "TLS Certificates",
-        url: "/tls",
+        name: "TLS certificates",
+        url: "/dashboard/tls",
         Icon: FiLock,
     },
     {
+        name: "Outposts",
+        url: "/dashboard/outposts",
+        Icon: FiServer,
+    },
+    {
         name: "Settings",
-        url: "/settings",
+        url: "/dashboard/settings",
         Icon: FiSettings,
-    }
-]
+    }, 
+];
 
 interface NavbarProps {
     name: string;
@@ -212,27 +231,29 @@ export const Navbar = () => {
 
     const handleLogout = () => {
         // Add your logout logic here
-        localStorage.removeItem("authToken");
+        localStorage.removeItem("token");
         navigate("/login");
     };
 
     return (
-        <>
-            <Navbarstyle>
-                <LogoStyle 
-                    src={Logo} 
-                    alt="Radiance Logo"
-                    onClick={() => navigate("/")}
-                />
+        <NavbarContainer>
+            <NavbarBase>
+                <LogoContainer>
+                    <LogoBase 
+                        src={Logo} 
+                        alt="Radiance Logo"
+                        onClick={() => navigate("/dashboard")}
+                    />
+                </LogoContainer>
                 <NavElementsDesktop>
                     {navbarElements.map(({ name, url, Icon }) => (
-                        <NavElementStyle 
+                        <NavbarItem 
                             onClick={() => handleNavigation(url)}
                             isActive={isActive(url)}
                         >
                             <Icon size={20} />
                             <span>{name}</span>
-                        </NavElementStyle>
+                        </NavbarItem>
                     ))}
                 </NavElementsDesktop>
                 <RightActions>
@@ -250,7 +271,7 @@ export const Navbar = () => {
                         {isDrawerOpen() ? <FiX size={24} /> : <FiMenu size={24} />}
                     </MobileMenuButton>
                 </RightActions>
-            </Navbarstyle>
+            </NavbarBase>
             <DrawerOverlay 
                 isOpen={isDrawerOpen()} 
                 onClick={() => setIsDrawerOpen(false)}
@@ -261,7 +282,7 @@ export const Navbar = () => {
                         src={Logo} 
                         alt="Radiance Logo"
                         onClick={() => {
-                            navigate("/");
+                            navigate("/dashboard");
                             setIsDrawerOpen(false);
                         }}
                     />
@@ -284,6 +305,6 @@ export const Navbar = () => {
                     ))}
                 </DrawerNav>
             </DrawerMenu>
-        </>
+        </NavbarContainer>
     )
 }

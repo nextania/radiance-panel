@@ -1,11 +1,27 @@
+import type { JSX } from "solid-js";
 import { styled } from "solid-styled-components";
 
-export const Button = styled.button`
-  background-color: var(--button-color);
-  font-size: 1.2rem;
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6rem 1.2rem;
+const ButtonBase = styled.button`
+  background-color: oklch(.558 .288 302.321);
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
   &:hover {
-    background-color: var(--button-hover-color);
-  }`;
+    background-color: oklch(.496 .265 301.924);
+  }
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
+export const Button = ({ Icon, text }: { Icon: JSX.Element, text: string; }) => {
+  return (
+    <ButtonBase>
+      {Icon}
+      {text}
+    </ButtonBase>
+  )
+};

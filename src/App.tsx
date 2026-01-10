@@ -1,13 +1,13 @@
-import type { ParentProps } from "solid-js"
-import { Navbar } from "./components/Navbar/Navbar"
+import type { ParentProps } from "solid-js";
+import { Navbar } from "./components/Navbar/Navbar";
 
-function App({ children }: ParentProps) {
+const App = ({ children }: ParentProps) => {
   return (
     <div class="app-container">
       <Navbar />
       {children}
     </div>
   )
-}
+};
 
-export default App
+export default App;

@@ -1,4 +1,14 @@
 {
+    "generic": {
+        "loading": "Loading...",
+        "enabled": "Enabled",
+        "disabled": "Disabled",
+        "enable": "Enable",
+        "disable": "Disable",
+        "delete": "Delete",
+        "edit": "Edit",
+        "duplicate": "Duplicate"
+    },
     "brand": {
         "welcome": "Welcome to Radiance",
         "tagline": "An open-source multipurpose gateway",
@@ -14,6 +24,7 @@
         "zh-CN": "Chinese (Simplified)"
     },
     "navigation": {
+        "overview": "Overview",
         "hosts": "Hosts",
         "tls": "TLS certificates",
         "outposts": "Outposts",
@@ -22,8 +33,26 @@
     },
     "hosts": {
         "manage": "Manage your proxy hosts",
-        "addHost": "Add new host",
-        "enabled": "Enabled",
-        "disabled": "Disabled"
+        "addHost": "Add new host"
+    },
+    "tls": {
+        "manage": "Manage your TLS certificates",
+        "addCertificate": "Add new certificate",
+        "valid": "Valid",
+        "expiring": "Expiring soon",
+        "expired": "Expired"
+    },
+    "outposts": {
+        "manage": "Manage your outposts",
+        "addOutpost": "Add new outpost",
+        "online": "Online",
+        "offline": "Offline"
+    },
+    "metrics": {
+        "requestsServed": "Requests served",
+        "dataServedMB": "Data served (MB)",
+        "requestsChallenged": "Requests challenged",
+        "cacheHitRatePercent": "Cache hit rate (%)",
+        "noData": "No data available"
     }
 }

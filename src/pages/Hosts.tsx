@@ -4,48 +4,15 @@ import Host from "../components/Host.tsx";
 import { styled } from "solid-styled-components";
 import { FiPlus } from "solid-icons/fi";
 import { useTranslate } from "../i18n";
+import { Container, Content, Header, HeadingLarge, Section, SubheadingLarge } from '../components/Layout.tsx';
 
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 0;  
-`;
-const Section = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-const HeadingLarge = styled.div`
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--text-primary);
-`;
-const SubheadingLarge = styled.div`
-  font-size: 1rem;
-  font-weight: 400;
-  color: var(--text-secondary);
-`;
-const Content = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-`;
-const HostsContainer = styled.div`
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  & > * {
-    width: 100%;
-    max-width: 1000px;
-  }
-`;
+
 
 const Hosts = () => {
   const t = useTranslate();
   return (
     <>
-      <HostsContainer>
+      <Container>
         <Header>
           <Section>
             <HeadingLarge>{t("navigation.hosts")}</HeadingLarge>
@@ -63,7 +30,7 @@ const Hosts = () => {
           <Host hostname="panel.example.com" enabled={true} tls={true} />
           <Host hostname="sso.example.com" enabled={true} tls={true} />
         </Content>
-      </HostsContainer>
+      </Container>
     </>
   )
 }

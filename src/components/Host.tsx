@@ -1,91 +1,8 @@
 import { FiActivity, FiGlobe, FiMoreVertical, FiShield } from "solid-icons/fi";
 import { styled } from "solid-styled-components";
 import { useTranslate } from "../i18n";
-
-const HostContainer = styled.div`
-    display: flex;
-    padding: 0.5rem;
-    border: 1px solid var(--border-color-light);
-    border-radius: 8px;
-    background: var(--bg-card);
-    box-shadow: var(--shadow-md);
-    transition: box-shadow 0.2s ease, border-color 0.2s ease;
-    
-    &:hover {
-        border-color: var(--border-color-light);
-        box-shadow: var(--shadow-lg);
-    }
-`;
-
-const HostDetails = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex: 1;
-`;
-const HostIcon = styled.div`
-    width: 40px;
-    height: 40px;
-    background-color: var(--primary-color);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`;
-const HostName = styled.div`
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--text-primary);
-`;
-const HostBadge = styled.div<{ type: "enabled" | "disabled" | "tls" }>`
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    background-color: ${(props) =>
-        props.type === "enabled" ? "var(--success-dark)" :
-        props.type === "disabled" ? "var(--error-dark)" :
-        "var(--info-dark)"};
-    
-    border: 1px solid ${(props) =>
-        props.type === "enabled" ? "var(--success-border)" :
-        props.type === "disabled" ? "var(--error-border)" :
-        "var(--info-border)"};
-    color: ${(props) =>
-        props.type === "enabled" ? "var(--success-color)" :
-        props.type === "disabled" ? "var(--error-color)" :
-        "var(--info-color)"};
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-`;
-const HostActions = styled.div`
-    display: flex;
-    gap: 0.5rem;
-`;
-const ActionButton = styled.button`
-    background: none;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.25rem;
-    border-radius: 4px;
-    color: var(--text-primary);
-    transition: background-color 0.2s ease, color 0.2s ease;
-    
-    &:hover {
-        background-color: var(--bg-hover);
-        color: var(--text-secondary);
-    }
-    
-    &:focus-visible {
-        outline: none;
-        box-shadow: 0 0 0 2px var(--focus-ring);
-    }
-    
-    font-size: 1.25rem;
-`;
+import { Menu, MenuItem, MenuDivider } from "./Menu";
+import { ActionButton, CardActions, CardBadge, CardContainer, CardDetails, CardIcon, CardName } from "./Card";
 
 interface HostProps {
     enabled: boolean;
@@ -96,19 +13,23 @@ interface HostProps {
 const Host = (props: HostProps) => {
     const t = useTranslate();
     return (
-        <HostContainer>
-            <HostDetails>
-                <HostIcon> <FiGlobe /> </HostIcon>
-                <HostName>{props.hostname}</HostName>
-                <HostBadge type={props.enabled ? "enabled" : "disabled"}> <FiActivity /> {props.enabled ? t("hosts.enabled") : t("hosts.disabled")}</HostBadge>
-                {props.tls && <HostBadge type="tls"> <FiShield /> TLS</HostBadge>}
-            </HostDetails>
-            <HostActions>
-                {/* <ActionButton>Edit</ActionButton>
-                <ActionButton>Delete</ActionButton> */}
-                <ActionButton> <FiMoreVertical /></ActionButton>
-            </HostActions>
-        </HostContainer>
+        <CardContainer>
+            <CardDetails>
+                <CardIcon> <FiGlobe /> </CardIcon>
+                <CardName>{props.hostname}</CardName>
+                <CardBadge type={props.enabled ? "success" : "error"}> <FiActivity /> {props.enabled ? t("generic.enabled") : t("generic.disabled")}</CardBadge>
+                {props.tls && <CardBadge type="info"> <FiShield /> TLS</CardBadge>}
+            </CardDetails>
+            <CardActions>
+                <Menu trigger={<ActionButton> <FiMoreVertical /></ActionButton>}>
+                    <MenuItem>{t("generic.edit")}</MenuItem>
+                    <MenuItem>{t("generic.duplicate")}</MenuItem>
+                    <MenuDivider />
+                    <MenuItem>{props.enabled ? t("generic.disable") : t("generic.enable")}</MenuItem>
+                    <MenuItem destructive onClick={() => setDeleteDialogOpen(true)}>{t("generic.delete")}</MenuItem>
+                </Menu>
+            </CardActions>
+        </CardContainer>
     )
 };
 

@@ -10,6 +10,7 @@ import Tls from "./pages/Tls.tsx";
 import Outposts from "./pages/Outposts.tsx";
 import Settings from "./pages/Settings.tsx";
 import { StateProvider } from "./context.tsx";
+import Overview from "./pages/Overview.tsx";
 
 const root = document.getElementById("root");
 
@@ -17,7 +18,8 @@ render(() => (
     <StateProvider>
         <Router>
             <Route path="/dashboard" component={App}>
-                <Route path="/" component={() => <Navigate href="/dashboard/hosts" />} />
+                <Route path="/" component={() => <Navigate href="/dashboard/overview" />} />
+                <Route path="/overview" component={Overview} />
                 <Route path="/hosts" component={Hosts} />
                 <Route path="/tls" component={Tls} />
                 <Route path="/outposts" component={Outposts} />

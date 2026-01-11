@@ -14,7 +14,7 @@ html, body, #root {
   box-sizing: border-box;
   height: 100%;
   width: 100%;
-  overflow: hidden;
+  overflow: auto;
 }
 
 @keyframes pulse {
@@ -83,6 +83,9 @@ html, body, #root {
   --success-color: oklch(.65 .18 165);
   --success-dark: oklch(.2 .08 165);
   --success-border: oklch(.5 .15 165 / .4);
+  --warning-color: oklch(.65 .18 75);
+  --warning-dark: oklch(.25 .08 75);
+  --warning-border: oklch(.5 .15 75 / .4);
   --error-color: oklch(.6 .22 15);
   --error-dark: oklch(.25 .08 15);
   --error-border: oklch(.5 .18 15 / .4);

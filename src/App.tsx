@@ -3,10 +3,10 @@ import { Navbar } from "./components/Navbar";
 
 const App = ({ children }: ParentProps) => {
   return (
-    <div class="app-container">
+    <>
       <Navbar />
       {children}
-    </div>
+    </> 
   )
 };
 

@@ -1,7 +1,8 @@
 import { FiActivity, FiGlobe, FiMoreVertical, FiShield } from "solid-icons/fi";
-import { styled } from "solid-styled-components";
+import { createSignal } from "solid-js";
 import { useTranslate } from "../i18n";
 import { Menu, MenuItem, MenuDivider } from "./Menu";
+import { Dialog } from "./Dialog";
 import { ActionButton, CardActions, CardBadge, CardContainer, CardDetails, CardIcon, CardName } from "./Card";
 
 interface HostProps {
@@ -12,6 +13,8 @@ interface HostProps {
 
 const Host = (props: HostProps) => {
     const t = useTranslate();
+    const [deleteDialogOpen, setDeleteDialogOpen] = createSignal(false);
+    
     return (
         <CardContainer>
             <CardDetails>
@@ -29,6 +32,16 @@ const Host = (props: HostProps) => {
                     <MenuItem destructive onClick={() => setDeleteDialogOpen(true)}>{t("generic.delete")}</MenuItem>
                 </Menu>
             </CardActions>
+            <Dialog
+                open={deleteDialogOpen()}
+                onOpenChange={setDeleteDialogOpen}
+                title="Delete host"
+                description={`Are you sure you want to delete "${props.hostname}"? This action cannot be undone.`}
+                confirmLabel="Delete"
+                cancelLabel="Cancel"
+                destructive
+                onConfirm={() => console.log("Deleting host:", props.hostname)}
+            />
         </CardContainer>
     )
 };

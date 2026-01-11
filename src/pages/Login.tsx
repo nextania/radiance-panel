@@ -122,6 +122,18 @@ const LoginMain = styled.div`
     align-items: center;
     justify-content: center;
     gap: 1rem;
+    animation: fadeUpIn 0.5s ease-out;
+    
+    @keyframes fadeUpIn {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 `;
 
 const TextGroup = styled.div`

@@ -1,5 +1,5 @@
 import type { IconTypes } from "solid-icons";
-import { FiGlobe, FiLock, FiLogOut, FiSettings, FiMenu, FiX, FiServer } from "solid-icons/fi";
+import { FiGlobe, FiLock, FiLogOut, FiSettings, FiMenu, FiX, FiServer, FiPieChart } from "solid-icons/fi";
 import { styled } from "solid-styled-components"
 import Logo from "../assets/radiance.svg";
 import { useNavigate, useLocation } from "@solidjs/router";
@@ -18,6 +18,7 @@ const NavbarBase = styled.nav`
     box-sizing: border-box;
     border-radius: 12px;
     border: 1px solid var(--border-color);
+    backdrop-filter: blur(5px);
 `;
 
 const LogoBase = styled.img`
@@ -34,7 +35,7 @@ const NavElementsDesktop = styled.div`
     align-items: center;
     gap: 0.5rem;
     
-    @media (max-width: 825px) {
+    @media (max-width: 900px) {
         display: none;
     }
 `;
@@ -43,7 +44,7 @@ const NavbarItem = styled.div<{ isActive?: boolean }>`
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.75rem;
     user-select: none;
     border-radius: 6px;
     transition: background-color 0.2s ease, color 0.2s ease;
@@ -90,7 +91,7 @@ const ActionButton = styled.button`
 const MobileMenuButton = styled(ActionButton)`
     display: none;
     
-    @media (max-width: 825px) {
+    @media (max-width: 900px) {
         display: flex;
     }
 `;
@@ -108,7 +109,7 @@ const DrawerOverlay = styled.div<{ isOpen: boolean }>`
     pointer-events: ${(props) => props.isOpen ? "auto" : "none"};
     transition: opacity 0.3s ease;
     
-    @media (max-width: 825px) {
+    @media (max-width: 900px) {
         display: block;
     }
 `;
@@ -127,7 +128,7 @@ const DrawerMenu = styled.div<{ isOpen: boolean }>`
     overflow-y: auto;
     padding-top: 1rem;
     
-    @media (min-width: 826px) {
+    @media (min-width: 901px) {
         display: none;
     }
 `;
@@ -161,7 +162,6 @@ const DrawerElementStyle = styled.div<{ isActive?: boolean }>`
     align-items: center;
     gap: 0.75rem;
     padding: 0.75rem 1rem;
-    cursor: pointer;
     border-radius: 6px;
     transition: background-color 0.2s ease, color 0.2s ease;
     color: ${(props) => props.isActive ? "var(--primary-text)" : "var(--text-primary)"};
@@ -178,7 +178,9 @@ const NavbarContainer = styled.div`
     width: 100%;
     box-sizing: border-box;
     padding: 0.5rem 1rem;
-    
+    position: sticky;
+    top: 0;
+    z-index: 100;
 `;
 const LogoContainer = styled.div`
     display: flex;
@@ -200,6 +202,11 @@ export const Navbar = () => {
     const [isDrawerOpen, setIsDrawerOpen] = createSignal(false);
     const t = useTranslate();
     const navbarElements = (): NavbarProps[] => [
+        {
+            name: t("navigation.overview")!,
+            url: "/dashboard/overview",
+            Icon: FiPieChart,
+        },
         {
             name: t("navigation.hosts")!,
             url: "/dashboard/hosts",

@@ -2,13 +2,14 @@ import logo from "../assets/radiance.svg";
 import { styled } from "solid-styled-components";
 import { useTranslate } from "../i18n";
 import Select from "../components/Select";
-import { createResource, ErrorBoundary, For, Show } from "solid-js";
+import { createResource, createSignal, ErrorBoundary, For, Show } from "solid-js";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
 import { FiKey } from "solid-icons/fi";
 import { Client } from "../api";
 import { intoRenderableError, type RequestError, type ServerError } from "../api/errors";
 import { usePreferences } from "../context";
+import { useNavigate } from "@solidjs/router";
 
 const LoginBg = styled.div`
     background: linear-gradient(to top, #7c2d12, #581c87, #111827);
@@ -170,9 +171,19 @@ const Login = () => {
     const [preferences, setPreferences] = usePreferences();
     const t = useTranslate();
     const [capabilities] = createResource(() => Client.getCapabilities());
+    const [password, setPassword] = createSignal("");
+    const navigate = useNavigate();
     
-    const login = () => {
-        console.log("Logging in with password..."); 
+    const login = async () => {
+        try {
+            const session = await Client.authenticate(password());
+            localStorage.setItem("token", session.token);
+            const continueUrl = new URLSearchParams(location.search).get("continue");
+            navigate(continueUrl || "/dashboard");
+        } catch (e) {
+            // TODO: display error nicely
+            alert(t(intoRenderableError(e as ServerError | RequestError)));
+        }
     };
     return (
         <Show when={t("generic")}>
@@ -211,7 +222,7 @@ const Login = () => {
                                 <Spacer />
                             </Show>
                             <Show when={capabilities()?.passwordAuthentication}>
-                                <Input type="password" placeholder={t("login.password")} />
+                                <Input type="password" placeholder={t("login.password")} value={password()} onInput={(e) => setPassword(e.currentTarget.value)} />
                                 <Button Icon={FiKey} text={t("login.loginWithPassword")!} onClick={login} />
                             </Show>
                         </ErrorBoundary>

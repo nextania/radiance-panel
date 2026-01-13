@@ -44,6 +44,16 @@ const routes = {
             }),
         }
     },
+    VALIDATE_TOKEN: {
+        route: "/api/session",
+        method: "GET" as const,
+        types: {
+            request: undefined,
+            response: object({
+                expiresAt: number(),
+            }),
+        }
+    },
     CAPABILITIES: {
         route: "/api",
         method: "GET" as const,

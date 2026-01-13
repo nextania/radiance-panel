@@ -9,6 +9,14 @@
         "edit": "编辑",
         "duplicate": "复制"
     },
+    "errors": {
+        "serverError": "服务器遇到内部错误。请检查日志以获取更多详情。",
+        "sessionExpired": "会话已过期。请重新登录。",
+        "invalidCredentials": "提供的凭据无效。请重试。",
+        "rateLimited": "在短时间内请求过多。请稍后再试。",
+        "timedOut": "服务器超时。请检查您的连接并重试。",
+        "unknownError": "发生未知错误。请稍后再试。"
+    },
     "brand": {
         "welcome": "欢迎使用 Radiance",
         "tagline": "一个开源的多功能网关",
@@ -17,6 +25,8 @@
     "login": {
         "login": "登录",
         "loginWith": "使用 {{ provider }} 登录",
+        "loginWithPassword": "使用密码登录",
+        "password": "密码",
         "welcomeBack": "欢迎回来！请登录以继续。"
     },
     "languages": {

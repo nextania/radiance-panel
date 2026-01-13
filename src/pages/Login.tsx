@@ -1,11 +1,14 @@
 import logo from "../assets/radiance.svg";
-import authentik from "../assets/authentik.svg";
 import { styled } from "solid-styled-components";
 import { useTranslate } from "../i18n";
 import Select from "../components/Select";
-import { createMemo } from "solid-js";
+import { createMemo, createResource, ErrorBoundary, For, Show } from "solid-js";
 import { useGlobalState } from "../context";
 import { Button } from "../components/Button";
+import { Input } from "../components/Input";
+import { FiKey } from "solid-icons/fi";
+import { Client } from "../api";
+import { intoRenderableError, type RequestError, type ServerError } from "../api/errors";
 
 const LoginBg = styled.div`
     background: linear-gradient(to top, #7c2d12, #581c87, #111827);
@@ -157,15 +160,22 @@ const LoginFooter = styled.div`
     color: #666;
 `;
 
+const Spacer = styled.hr`
+    width: 100%;
+    border: 1px solid var(--border-color-light);
+    border-radius: 9999px;
+`;
 
 const Login = () => {
     const state = createMemo(() => useGlobalState());
     const t = useTranslate();
+    const [capabilities] = createResource(() => Client.getCapabilities());
+    
     const login = () => {
-        window.location.href = "/api/oidc/authentik";
+        console.log("Logging in with password..."); 
     };
     return (
-        <>
+        <Show when={t("generic")}>
             <LoginBg>
                 <Sun />
                 {STARS}
@@ -186,7 +196,25 @@ const Login = () => {
                             <Heading>{t("login.login")}</Heading>
                             <Subheading>{t("login.welcomeBack")}</Subheading>
                         </TextGroup>
-                        <Button Icon={() => <img src={authentik} alt="Authentik logo" />} text={() => t("login.loginWith", { provider: "Authentik" })!} onClick={login} />
+                        <ErrorBoundary fallback={(e: ServerError | RequestError) => <div>{t(intoRenderableError(e))}</div>}>
+                            <Show when={!capabilities()}>
+                                <div>{t("generic.loading")}</div>
+                            </Show>
+                            <Show when={capabilities()?.oidcProviders && capabilities()!.oidcProviders.length > 0}>
+                                <For each={capabilities()!.oidcProviders}>{(provider) => 
+                                    <Button Icon={() => <img src={provider.logoPath} alt={`${provider.displayName} logo`} />} text={() => t("login.loginWith", { provider: provider.displayName })!} onClick={() => {
+                                        window.location.href = provider.authPath;
+                                    }} />
+                                }</For>
+                            </Show>
+                            <Show when={capabilities()?.oidcProviders && capabilities()!.oidcProviders.length > 0 && capabilities()?.passwordAuthentication}>
+                                <Spacer />
+                            </Show>
+                            <Show when={capabilities()?.passwordAuthentication}>
+                                <Input type="password" placeholder={t("login.password")} />
+                                <Button Icon={FiKey} text={t("login.loginWithPassword")!} onClick={login} />
+                            </Show>
+                        </ErrorBoundary>
                     </LoginMain>
                     <LoginSpacer>
                         <Select options={[{
@@ -210,7 +238,7 @@ const Login = () => {
                     <SubheadingLarge>{t("brand.tagline")}</SubheadingLarge>
                 </LoginAside>
             </LoginBg>
-        </>
+        </Show>
     )
 }
 

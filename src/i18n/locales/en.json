@@ -9,6 +9,14 @@
         "edit": "Edit",
         "duplicate": "Duplicate"
     },
+    "errors": {
+        "serverError": "The server encountered an internal error. Please check the logs for more details.",
+        "sessionExpired": "The session has expired. Please log in again.",
+        "invalidCredentials": "Invalid credentials provided. Please try again.",
+        "rateLimited": "Too many requests have been made in a short period. Please wait and try again later.",
+        "timedOut": "The server timed out. Please check your connection and try again.",
+        "unknownError": "An unknown error occurred. Please try again later."
+    },
     "brand": {
         "welcome": "Welcome to Radiance",
         "tagline": "An open-source multipurpose gateway",
@@ -17,6 +25,8 @@
     "login": {
         "login": "Log in",
         "loginWith": "Log in with {{ provider }}",
+        "loginWithPassword": "Log in with password",
+        "password": "Password",
         "welcomeBack": "Welcome back! Please log in to continue."
     },
     "languages": {

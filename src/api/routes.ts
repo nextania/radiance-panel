@@ -30,6 +30,19 @@ const host = object({
 
 export type Host = Infer<typeof host>;
 
+const certificate = union([object({
+    type: literal("local"),
+    id: string(),
+    cert_file: string(),
+    key_file: string(),
+}), object({
+    type: literal("vault"),
+    id: string(),
+    vault_path: string(),
+})]);
+
+export type Certificate = Infer<typeof certificate>;
+
 const routes = {
     PASSWORD_LOGIN: {
         route: "/api/session",
@@ -151,6 +164,63 @@ const routes = {
             }),
         }
     },
+    GET_CERTIFICATES: {
+        route: "/api/certificates",
+        method: "GET" as const,
+        types: {
+            request: undefined,
+            response: object({
+                data: array(certificate),
+                message: string(),
+            }),
+        }
+    },
+    GET_CERTIFICATE: {
+        route: "/api/certificates/{id}",
+        method: "GET" as const,
+        types: {
+            request: undefined,
+            response: object({
+                data: nullable(certificate),
+                message: string(),
+            }),
+        }
+    },
+    ADD_CERTIFICATE: {
+        route: "/api/certificates",
+        method: "POST" as const,
+        types: {
+            request: certificate,
+            response: object({
+                data: literal(null),
+                message: string(),
+            }),
+        }
+    },
+    DELETE_CERTIFICATE: {
+        route: "/api/certificates/{id}",
+        method: "DELETE" as const,
+        types: {
+            request: undefined,
+            response: object({
+                data: literal(null),
+                message: string(),
+            }),
+        }
+    },
+    // UPDATE_CERTIFICATE: {
+    //     route: "/api/certificates/{id}",
+    //     method: "PUT" as const,
+    //     types: {
+    //         request: object({
+    //             cert: partial(certificate),
+    //         }),
+    //         response: object({
+    //             data: literal(null),
+    //             message: string(),
+    //         }),
+    //     }
+    // },
 }
 
 type GenericResponse<T> = { error: ServerError } | T;

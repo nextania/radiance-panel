@@ -1,8 +1,7 @@
 import CorvuDialog from "corvu/dialog";
 import { styled } from "solid-styled-components";
-import type { JSX } from "solid-js";
 
-const Overlay = styled(CorvuDialog.Overlay)`
+export const Overlay = styled(CorvuDialog.Overlay)`
     position: fixed;
     inset: 0;
     background-color: rgba(0, 0, 0, 0.6);
@@ -19,7 +18,7 @@ const Overlay = styled(CorvuDialog.Overlay)`
     }
 `;
 
-const Content = styled(CorvuDialog.Content)`
+export const Content = styled(CorvuDialog.Content)`
     position: fixed;
     top: 50%;
     left: 50%;
@@ -50,27 +49,28 @@ const Content = styled(CorvuDialog.Content)`
     }
 `;
 
-const Title = styled(CorvuDialog.Label)`
+export const Title = styled(CorvuDialog.Label)`
     font-size: 1.25rem;
     font-weight: 600;
     color: var(--text-primary);
     margin: 0 0 0.5rem 0;
 `;
 
-const Description = styled(CorvuDialog.Description)`
+export const Description = styled(CorvuDialog.Description)`
     font-size: 0.9375rem;
     color: var(--text-secondary);
     margin: 0 0 1.5rem 0;
     line-height: 1.5;
 `;
 
-const Actions = styled.div`
+export const Actions = styled.div`
     display: flex;
     gap: 0.75rem;
     justify-content: flex-end;
+    margin-top: 1.5rem;
 `;
 
-const Button = styled.button<{ variant?: "primary" | "destructive" | "secondary" }>`
+export const DialogButton = styled.button<{ variant?: "primary" | "destructive" | "secondary" }>`
     padding: 0.5rem 1rem;
     border-radius: 6px;
     font-size: 0.875rem;
@@ -140,17 +140,17 @@ export const Dialog = (props: DialogProps) => {
                     <Description>{props.description}</Description>
                     <Actions>
                         <CorvuDialog.Close as="div">
-                            <Button variant="secondary">
+                            <DialogButton variant="secondary">
                                 {props.cancelLabel}
-                            </Button>
+                            </DialogButton>
                         </CorvuDialog.Close>
                         <CorvuDialog.Close as="div">
-                            <Button 
+                            <DialogButton 
                                 variant={props.destructive ? "destructive" : "primary"}
                                 onClick={props.onConfirm}
                             >
                                 {props.confirmLabel}
-                            </Button>
+                            </DialogButton>
                         </CorvuDialog.Close>
                     </Actions>
                 </Content>

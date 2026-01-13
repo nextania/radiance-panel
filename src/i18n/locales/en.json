@@ -7,7 +7,9 @@
         "disable": "Disable",
         "delete": "Delete",
         "edit": "Edit",
-        "duplicate": "Duplicate"
+        "duplicate": "Duplicate",
+        "cancel": "Cancel",
+        "save": "Save"
     },
     "errors": {
         "serverError": "The server encountered an internal error. Please check the logs for more details.",
@@ -43,7 +45,14 @@
     },
     "hosts": {
         "manage": "Manage your proxy hosts",
-        "addHost": "Add new host"
+        "addHost": "Add new host",
+        "editHost": "Edit host",
+        "editHostDescription": "Modify the proxy host settings",
+        "hostnames": "Hostnames",
+        "addHostname": "Add hostname",
+        "removeHostname": "Remove hostname",
+        "certificate": "Certificate",
+        "noCertificate": "No certificate"
     },
     "tls": {
         "manage": "Manage your TLS certificates",

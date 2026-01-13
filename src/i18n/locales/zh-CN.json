@@ -7,7 +7,9 @@
         "disable": "禁用",
         "delete": "删除",
         "edit": "编辑",
-        "duplicate": "复制"
+        "duplicate": "复制",
+        "cancel": "取消",
+        "save": "保存"
     },
     "errors": {
         "serverError": "服务器遇到内部错误。请检查日志以获取更多详情。",
@@ -43,7 +45,14 @@
     },
     "hosts": {
         "manage": "管理您的代理主机",
-        "addHost": "添加新主机"
+        "addHost": "添加新主机",
+        "editHost": "编辑主机",
+        "editHostDescription": "修改代理主机设置",
+        "hostnames": "主机名",
+        "addHostname": "添加主机名",
+        "removeHostname": "移除主机名",
+        "certificate": "证书",
+        "noCertificate": "无证书"
     },
     "tls": {
         "manage": "管理您的 TLS 证书",

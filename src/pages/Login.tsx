@@ -2,13 +2,13 @@ import logo from "../assets/radiance.svg";
 import { styled } from "solid-styled-components";
 import { useTranslate } from "../i18n";
 import Select from "../components/Select";
-import { createMemo, createResource, ErrorBoundary, For, Show } from "solid-js";
-import { useGlobalState } from "../context";
+import { createResource, ErrorBoundary, For, Show } from "solid-js";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
 import { FiKey } from "solid-icons/fi";
 import { Client } from "../api";
 import { intoRenderableError, type RequestError, type ServerError } from "../api/errors";
+import { usePreferences } from "../context";
 
 const LoginBg = styled.div`
     background: linear-gradient(to top, #7c2d12, #581c87, #111827);
@@ -167,7 +167,7 @@ const Spacer = styled.hr`
 `;
 
 const Login = () => {
-    const state = createMemo(() => useGlobalState());
+    const [preferences, setPreferences] = usePreferences();
     const t = useTranslate();
     const [capabilities] = createResource(() => Client.getCapabilities());
     
@@ -223,9 +223,9 @@ const Login = () => {
                         }, {
                             value: "zh-CN",
                             label: `${t("languages.zh-CN")!} (简体中文)`,
-                        }]} value={state().get("sessionData")?.language || "en"} onChange={(val) => {
-                            state().update("sessionData", { language: val });
-                            localStorage.setItem("language", val);
+                        }]} value={preferences.locale || "en"} onChange={(val) => {
+                            setPreferences("locale", val);
+                            localStorage.setItem("locale", val);
                         }}  />
                         
                         <LoginFooter>

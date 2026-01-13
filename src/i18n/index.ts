@@ -2,7 +2,7 @@ import * as i18n from "@solid-primitives/i18n";
 
 import type * as en from "./locales/en.json";
 import { createMemo, createResource } from "solid-js";
-import { useGlobalState } from "../context";
+import { usePreferences } from "../context";
 
 export type Locale = "en" | "zh-CN";
 export type RawDictionary = typeof en;
@@ -14,8 +14,8 @@ const fetchDictionary = async (locale: Locale): Promise<Dictionary> => {
 }
 
 export const useTranslate = () => {
-  const state = createMemo(() => useGlobalState());
-  const language = createMemo(() => state().get("sessionData")?.language || "en");
+  const [preferences] = usePreferences();
+  const language = createMemo(() => preferences.locale || "en");
 
   const [dict] = createResource(language, fetchDictionary);
   

@@ -5,6 +5,7 @@ import Logo from "../assets/radiance.svg";
 import { useNavigate, useLocation } from "@solidjs/router";
 import { createSignal, For } from "solid-js";
 import { useTranslate } from "../i18n";
+import { useClient } from "../context";
 
 const NavbarBase = styled.nav`
     display: flex;
@@ -201,6 +202,7 @@ export const Navbar = () => {
     const location = useLocation();
     const [isDrawerOpen, setIsDrawerOpen] = createSignal(false);
     const t = useTranslate();
+    const client = useClient();
     const navbarElements = (): NavbarProps[] => [
         {
             name: t("navigation.overview")!,
@@ -239,8 +241,11 @@ export const Navbar = () => {
     };
 
     const handleLogout = () => {
-        // Add your logout logic here
-        localStorage.removeItem("token");
+        const token = localStorage.getItem("token");
+        if (token) {
+            localStorage.removeItem("token");
+        }
+        client.destroy();
         navigate("/login");
     };
 
@@ -250,7 +255,7 @@ export const Navbar = () => {
                 <LogoContainer>
                     <LogoBase 
                         src={Logo} 
-                        alt="Radiance Logo"
+                        alt="Radiance logo"
                         onClick={() => navigate("/dashboard")}
                     />
                 </LogoContainer>
@@ -288,7 +293,7 @@ export const Navbar = () => {
                 <DrawerHeader>
                     <DrawerLogoStyle 
                         src={Logo} 
-                        alt="Radiance Logo"
+                        alt="Radiance logo"
                         onClick={() => {
                             navigate("/dashboard");
                             setIsDrawerOpen(false);

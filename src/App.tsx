@@ -3,13 +3,13 @@ import { Navbar } from "./components/Navbar";
 import { useTranslate } from "./i18n";
 import Authenticated from "./components/Authenticated";
 
-const App = ({ children }: ParentProps) => {
+const App = (props: ParentProps) => {
   const t = useTranslate();
   return (
     <Show when={t("generic")}>
       <Authenticated>
         <Navbar />
-        {children}
+        {props.children}
       </Authenticated>
     </Show>
   )

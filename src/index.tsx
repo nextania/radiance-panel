@@ -13,6 +13,7 @@ import { PreferencesContext } from "./context.tsx";
 import Overview from "./pages/Overview.tsx";
 import { createStore } from "solid-js/store";
 import type { Locale } from "./i18n/index.ts";
+import Root from "./pages/Root.tsx";
 
 const root = document.getElementById("root");
 
@@ -30,7 +31,7 @@ render(() => {
                     <Route path="/settings" component={Settings} />
                 </Route>    
                 <Route path="/login" component={Login} />
-                {/* <Route path="/" component={} /> */}
+                <Route path="/" component={Root} />
                 <Route path="*" component={NotFound} />
             </Router>
         </PreferencesContext.Provider>

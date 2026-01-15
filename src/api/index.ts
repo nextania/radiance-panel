@@ -34,10 +34,10 @@ export class Client {
         return await callEndpoint("CAPABILITIES", undefined);
     }
     async getHosts(): Promise<Record<string, Host>> {
-        return (await callEndpoint("GET_HOSTS", undefined, this._token)).data;
+        return (await callEndpoint("GET_HOSTS", undefined, this._token));
     }
     async getHost(id: string): Promise<Host | null> {
-        return (await callEndpoint("GET_HOST", undefined, this._token, { id })).data;
+        return (await callEndpoint("GET_HOST", undefined, this._token, { id }));
     }
     async createHost(host: Host): Promise<void> {
         await callEndpoint("ADD_HOST", { config: host, id: ulid() }, this._token);
@@ -53,10 +53,10 @@ export class Client {
     }
 
     async getCertificates(): Promise<Certificate[]> {
-        return (await callEndpoint("GET_CERTIFICATES", undefined, this._token)).data;
+        return (await callEndpoint("GET_CERTIFICATES", undefined, this._token));
     }
     async getCertificate(id: string): Promise<Certificate | null> {
-        return (await callEndpoint("GET_CERTIFICATE", undefined, this._token, { id })).data;
+        return (await callEndpoint("GET_CERTIFICATE", undefined, this._token, { id }));
     }
     async createCertificate(cert: Certificate): Promise<void> {
         await callEndpoint("ADD_CERTIFICATE", cert, this._token);

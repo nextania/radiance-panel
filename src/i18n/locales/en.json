@@ -17,7 +17,12 @@
         "invalidCredentials": "Invalid credentials provided. Please try again.",
         "rateLimited": "Too many requests have been made in a short period. Please wait and try again later.",
         "timedOut": "The server timed out. Please check your connection and try again.",
-        "unknownError": "An unknown error occurred. Please try again later."
+        "unknownError": "An unknown error occurred. Please try again later.",
+        "hostNotFound": "The specified host no longer exists.",
+        "hostAlreadyExists": "A host with the specified domain already exists.",
+        "certificateNotFound": "The specified TLS certificate no longer exists.",
+        "certificateAlreadyExists": "A TLS certificate with the specified name already exists.",
+        "invalidCertificate": "The provided TLS certificate is invalid."
     },
     "brand": {
         "welcome": "Welcome to Radiance",
@@ -59,7 +64,10 @@
         "addCertificate": "Add new certificate",
         "valid": "Valid",
         "expiring": "Expiring soon",
-        "expired": "Expired"
+        "expired": "Expired",
+        "viewDetails": "View details",
+        "renew": "Renew",
+        "download": "Download"
     },
     "outposts": {
         "manage": "Manage your outposts",

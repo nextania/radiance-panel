@@ -1,10 +1,10 @@
-import { object, string, literal, boolean, optional, type Infer, is, Struct, nullable, union, array, partial, number, map, record } from "superstruct";
+import { object, string, literal, boolean, type Infer, is, Struct, nullable, union, array, partial, number, map, record } from "superstruct";
 import type { ServerError } from "./errors";
 
 const host = object({
     domains: array(string()),
     enabled: boolean(),
-    tls_cert_id: optional(string()),
+    tls_cert_id: nullable(string()),
     upstream: object({
         tls: boolean(),
         servers: array(union([
@@ -20,11 +20,11 @@ const host = object({
         ])),
         path: string(),
     }),
-    header_rewrites: optional(map(string(), string())),
-    upgrade_https: optional(boolean()),
-    forward_auth: optional(object({
+    header_rewrites: nullable(map(string(), string())),
+    upgrade_https: nullable(boolean()),
+    forward_auth: nullable(object({
         url: string(),
-        response_headers: optional(array(string())),
+        response_headers: nullable(array(string())),
     })),
 });
 
@@ -98,10 +98,7 @@ const routes = {
         method: "GET" as const,
         types: {
             request: undefined,
-            response: object({
-                data: record(string(), host),
-                message: string(),
-            }),
+            response: record(string(), host),
         }
     },
     GET_HOST: {
@@ -109,10 +106,7 @@ const routes = {
         method: "GET" as const,
         types: {
             request: undefined,
-            response: object({
-                data: nullable(host),
-                message: string(),
-            }),
+            response: host,
         }
     },
     ADD_HOST: {
@@ -123,10 +117,7 @@ const routes = {
                 id: string(),
                 config: host,
             }),
-            response: object({
-                data: literal(null),
-                message: string(),
-            }),
+            response: object({}),
         }
     },
     DELETE_HOST: {
@@ -134,10 +125,7 @@ const routes = {
         method: "DELETE" as const,
         types: {
             request: undefined,
-            response: object({
-                data: literal(null),
-                message: string(),
-            }),
+            response: object({}),
         }
     },
     UPDATE_HOST: {
@@ -147,10 +135,7 @@ const routes = {
             request: object({
                 config: partial(host),
             }),
-            response: object({
-                data: literal(null),
-                message: string(),
-            }),
+            response: object({}),
         }
     },
     HOT_RELOAD: {
@@ -158,10 +143,7 @@ const routes = {
         method: "POST" as const,
         types: {
             request: undefined,
-            response: object({
-                data: literal(null),
-                message: string(),
-            }),
+            response: object({}),
         }
     },
     GET_CERTIFICATES: {
@@ -169,10 +151,7 @@ const routes = {
         method: "GET" as const,
         types: {
             request: undefined,
-            response: object({
-                data: array(certificate),
-                message: string(),
-            }),
+            response: array(certificate),
         }
     },
     GET_CERTIFICATE: {
@@ -180,10 +159,7 @@ const routes = {
         method: "GET" as const,
         types: {
             request: undefined,
-            response: object({
-                data: nullable(certificate),
-                message: string(),
-            }),
+            response: certificate,
         }
     },
     ADD_CERTIFICATE: {
@@ -191,10 +167,7 @@ const routes = {
         method: "POST" as const,
         types: {
             request: certificate,
-            response: object({
-                data: literal(null),
-                message: string(),
-            }),
+            response: object({}),
         }
     },
     DELETE_CERTIFICATE: {
@@ -202,10 +175,7 @@ const routes = {
         method: "DELETE" as const,
         types: {
             request: undefined,
-            response: object({
-                data: literal(null),
-                message: string(),
-            }),
+            response: object({}),
         }
     },
     // UPDATE_CERTIFICATE: {

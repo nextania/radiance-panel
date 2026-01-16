@@ -1,4 +1,4 @@
-import { callEndpoint, type Certificate, type Host } from "./routes";
+import { callEndpoint, type Certificate, type CertificateInfo, type Host } from "./routes";
 import { ulid } from "ulid";
 
 export interface OidcProviderInfo {
@@ -52,10 +52,10 @@ export class Client {
         await callEndpoint("HOT_RELOAD", undefined, this._token);
     }
 
-    async getCertificates(): Promise<Certificate[]> {
+    async getCertificates(): Promise<Record<string, CertificateInfo>> {
         return (await callEndpoint("GET_CERTIFICATES", undefined, this._token));
     }
-    async getCertificate(id: string): Promise<Certificate | null> {
+    async getCertificate(id: string): Promise<CertificateInfo | null> {
         return (await callEndpoint("GET_CERTIFICATE", undefined, this._token, { id }));
     }
     async createCertificate(cert: Certificate): Promise<void> {

@@ -39,9 +39,20 @@ const certificate = union([object({
     type: literal("vault"),
     id: string(),
     vault_path: string(),
+}), object({
+    type: literal("managed"),
+    remote_id: string(),
+    control_socket: string(),
 })]);
 
 export type Certificate = Infer<typeof certificate>;
+
+const certificateInfo = object({
+    config: certificate,
+    days_remaining: number(),
+});
+
+export type CertificateInfo = Infer<typeof certificateInfo>;
 
 const routes = {
     PASSWORD_LOGIN: {
@@ -151,7 +162,7 @@ const routes = {
         method: "GET" as const,
         types: {
             request: undefined,
-            response: array(certificate),
+            response: record(string(), certificateInfo),
         }
     },
     GET_CERTIFICATE: {
@@ -159,7 +170,7 @@ const routes = {
         method: "GET" as const,
         types: {
             request: undefined,
-            response: certificate,
+            response: certificateInfo,
         }
     },
     ADD_CERTIFICATE: {

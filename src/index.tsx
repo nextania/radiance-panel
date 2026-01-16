@@ -14,6 +14,7 @@ import Overview from "./pages/Overview.tsx";
 import { createStore } from "solid-js/store";
 import type { Locale } from "./i18n/index.ts";
 import Root from "./pages/Root.tsx";
+import Authenticate from "./pages/Authenticate.tsx";
 
 const root = document.getElementById("root");
 
@@ -30,6 +31,7 @@ render(() => {
                     <Route path="/outposts" component={Outposts} />
                     <Route path="/settings" component={Settings} />
                 </Route>    
+                <Route path="/authenticate" component={Authenticate} />
                 <Route path="/login" component={Login} />
                 <Route path="/" component={Root} />
                 <Route path="*" component={NotFound} />

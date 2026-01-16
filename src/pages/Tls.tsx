@@ -1,11 +1,35 @@
 import { Button } from "../components/Button.tsx";
-import Certificate from "../components/Certificate.tsx";
+import CertificateCard from "../components/Certificate.tsx";
 import { FiPlus } from "solid-icons/fi";
 import { useTranslate } from "../i18n";
 import { Container, Content, Header, HeadingLarge, Section, SubheadingLarge } from "../components/Layout.tsx";
+import { useClient } from "../context.tsx";
+import { createResource, For, Show } from "solid-js";
+import type { Certificate } from "../api/routes.ts";
 
 const Tls = () => {
   const t = useTranslate();
+  const client = useClient();
+  
+  const [certificates] = createResource(async () => {
+    const certsData = await client.getCertificates();
+    return Object.entries(certsData).map(([id, cert]) => ({
+      id,
+      ...cert
+    })).sort((a, b) => {
+      const domainA = getCertificateDomain(a.config);
+      const domainB = getCertificateDomain(b.config);
+      return domainA.localeCompare(domainB);
+    });
+  });
+  
+  const getCertificateDomain = (cert: Certificate) => {
+    if (cert.type === "managed") {
+      return cert.remote_id;
+    }
+    return cert.id;
+  };
+  
   return (
     <>
       <Container>
@@ -19,12 +43,17 @@ const Tls = () => {
           </Section>
         </Header>
         <Content>
-          <Certificate domain="example.com" status="valid" expiresIn="90 days" />
-          <Certificate domain="*.example.com" status="valid" expiresIn="85 days" />
-          <Certificate domain="cloud.example.com" status="valid" expiresIn="60 days" />
-          <Certificate domain="demo.example.com" status="expiring" expiresIn="15 days" />
-          <Certificate domain="old.example.com" status="expired" />
-          <Certificate domain="panel.example.com" status="valid" expiresIn="120 days" />
+          <Show when={!certificates.loading} fallback={<div>Loading...</div>}>
+            <For each={certificates()}>
+              {(cert) => (
+                <CertificateCard
+                  domain={getCertificateDomain(cert.config)} 
+                  status="valid" 
+                  expiresIn={`${cert.days_remaining.toFixed().toString() } days`}
+                />
+              )}
+            </For>
+          </Show>
         </Content>
       </Container>
     </>

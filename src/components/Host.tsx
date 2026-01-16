@@ -8,8 +8,8 @@ import { ActionButton, CardActions, CardBadge, CardContainer, CardDetails, CardI
 
 interface HostProps {
     enabled: boolean;
-    hostname: string;
-    tls: boolean;
+    hostnames: string[];
+    certificate?: string;
 }
 
 const Host = (props: HostProps) => {
@@ -21,9 +21,9 @@ const Host = (props: HostProps) => {
         <CardContainer>
             <CardDetails>
                 <CardIcon> <FiGlobe /> </CardIcon>
-                <CardName>{props.hostname}</CardName>
+                <CardName>{props.hostnames[0] || "Unknown"}</CardName>
                 <CardBadge type={props.enabled ? "success" : "error"}> <FiActivity /> {props.enabled ? t("generic.enabled") : t("generic.disabled")}</CardBadge>
-                {props.tls && <CardBadge type="info"> <FiShield /> TLS</CardBadge>}
+                {props.certificate && <CardBadge type="info"> <FiShield /> TLS</CardBadge>}
             </CardDetails>
             <CardActions>
                 <Menu trigger={<ActionButton> <FiMoreVertical /></ActionButton>}>
@@ -37,20 +37,20 @@ const Host = (props: HostProps) => {
             <EditHostDialog
                 open={editDialogOpen()}
                 onOpenChange={setEditDialogOpen}
-                hostname={props.hostname}
+                hostnames={props.hostnames}
                 enabled={props.enabled}
-                tls={props.tls}
+                certificate={props.certificate}
                 onSave={(data) => console.log("Saving host:", data)}
             />
             <Dialog
                 open={deleteDialogOpen()}
                 onOpenChange={setDeleteDialogOpen}
                 title="Delete host"
-                description={`Are you sure you want to delete "${props.hostname}"? This action cannot be undone.`}
+                description={`Are you sure you want to delete "${props.hostnames[0] || "Unknown"}"? This action cannot be undone.`}
                 confirmLabel="Delete"
                 cancelLabel="Cancel"
                 destructive
-                onConfirm={() => console.log("Deleting host:", props.hostname)}
+                onConfirm={() => console.log("Deleting host:", props.hostnames[0] || "Unknown")}
             />
         </CardContainer>
     )

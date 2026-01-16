@@ -1,12 +1,13 @@
 import CorvuDialog from "corvu/dialog";
 import { styled } from "solid-styled-components";
-import { createSignal, For } from "solid-js";
+import { createSignal, For, createResource } from "solid-js";
 import { Input } from "./Input";
 import Toggle from "./Toggle";
 import Select from "./Select";
 import { useTranslate } from "../i18n";
 import { FiPlus, FiX } from "solid-icons/fi";
 import { Actions, Content, Description, DialogButton, Overlay, Title } from "./Dialog";
+import { useClient } from "../context";
 
 const Form = styled.form`
     display: flex;
@@ -98,26 +99,42 @@ const AddButton = styled.button`
 interface EditHostDialogProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
-    hostname: string;
+    hostnames: string[];
     enabled: boolean;
-    tls: boolean;
     certificate?: string;
     onSave?: (data: { hostnames: string[]; enabled: boolean; certificate?: string }) => void;
 }
 
 export const EditHostDialog = (props: EditHostDialogProps) => {
     const t = useTranslate();
-    const [hostnames, setHostnames] = createSignal<string[]>([props.hostname]);
+    const client = useClient();
+    const [hostnames, setHostnames] = createSignal<string[]>(props.hostnames);
     const [enabled, setEnabled] = createSignal(props.enabled);
     const [certificate, setCertificate] = createSignal(props.certificate || "");
 
-    // TODO: replace dummy data
-    const certificateOptions = () => [
-        { value: "", label: t("hosts.noCertificate")! },
-        { value: "cert-1", label: "example.com" },
-        { value: "cert-2", label: "*.example.com" },
-        { value: "cert-3", label: "mail.example.com" },
-    ];
+    const [certificates] = createResource(async () => {
+        return await client.getCertificates();
+    });
+
+    const certificateOptions = () => {
+        const certs = certificates();
+        if (!certs) {
+            return [{ value: "", label: t("hosts.noCertificate")! }];
+        }
+        
+        const options = [{ value: "", label: t("hosts.noCertificate")! }];
+        for (const [id, certInfo] of Object.entries(certs)) {
+            const config = certInfo.config;
+            let label = id;
+            if (config.type === "local" || config.type === "vault") {
+                label = config.id;
+            } else if (config.type === "managed") {
+                label = config.remote_id;
+            }
+            options.push({ value: id, label });
+        }
+        return options;
+    };
 
     const addHostname = () => {
         setHostnames([...hostnames(), ""]);

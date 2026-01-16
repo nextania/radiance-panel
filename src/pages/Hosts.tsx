@@ -35,9 +35,9 @@ const Hosts = () => {
             <For each={hosts()}>
               {(host) => (
                 <Host 
-                  hostname={host.domains[0] || "Unknown"} 
+                  hostnames={host.domains} 
                   enabled={host.enabled} 
-                  tls={!!host.tls_cert_id} 
+                  certificate={host.tls_cert_id ?? undefined} 
                 />
               )}
             </For>
